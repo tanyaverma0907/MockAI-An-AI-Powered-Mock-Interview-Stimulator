@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+/* ── Tailwind v4: class-based dark mode ────────────────────
+   Activates all dark: utilities when <html> has class="dark"
+   ────────────────────────────────────────────────────────── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Google Fonts ──────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=JetBrains+Mono:wght@400;600;700;800&display=swap');
+
+/* ── CSS Theme Tokens ──────────────────────────────────────
+   Light = default. Dark = when <html class="dark">
+   Use var(--bg), var(--text) etc anywhere in plain CSS.
+   For Tailwind classes use dark: prefix instead.
+   ────────────────────────────────────────────────────────── */
+:root {
+  /* Light theme values (default) */
+  --bg:              #fafaf9;
+  --bg-card:         #ffffff;
+  --bg-subtle:       #f5f5f4;
+  --text:            #111827;
+  --text-muted:      #6b7280;
+  --text-faint:      #9ca3af;
+  --border:          #e7e5e4;
+  --border-subtle:   #f0efee;
+  --scrollbar-thumb: rgba(0, 0, 0, 0.10);
+  --scrollbar-hover: rgba(0, 0, 0, 0.18);
+  --selection-bg:    rgba(129, 140, 248, 0.20);
+  --selection-text:  #1e1b4b;
+  --glass-bg:        rgba(255, 255, 255, 0.75);
+  --glass-border:    rgba(0, 0, 0, 0.06);
+}
+
+html.dark {
+  /* Dark theme values */
+  --bg:              #05070f;
+  --bg-card:         #0b0f1a;
+  --bg-subtle:       #0f1420;
+  --text:            #f1f5f9;
+  --text-muted:      #94a3b8;
+  --text-faint:      #475569;
+  --border:          rgba(255, 255, 255, 0.08);
+  --border-subtle:   rgba(255, 255, 255, 0.04);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.08);
+  --scrollbar-hover: rgba(255, 255, 255, 0.14);
+  --selection-bg:    rgba(129, 140, 248, 0.25);
+  --selection-text:  #e2e8f0;
+  --glass-bg:        rgba(11, 15, 26, 0.70);
+  --glass-border:    rgba(255, 255, 255, 0.06);
+}
+
+/* ── Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.25s ease;
+}
+
+/* ── Custom scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-hover); }
+
+/* ── Monospace utility ─────────────────────────────────── */
+.font-mono, .mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ── Focus ring ────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(129, 140, 248, 0.6);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ── Selection ─────────────────────────────────────────── */
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* ── Keyframes ─────────────────────────────────────────── */
+@keyframes audio-bar {
+  from { transform: scaleY(0.2); }
+  to   { transform: scaleY(1);   }
+}
+
+@keyframes think-dot {
+  0%, 100% { opacity: 0.2; transform: scale(0.85); }
+  50%       { opacity: 1;   transform: scale(1);    }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(1.6); opacity: 0;   }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Animation helpers ─────────────────────────────────── */
+.animate-fade-in  { animation: fade-in  0.35s ease both; }
+.animate-slide-up { animation: slide-up 0.45s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+/* ── Glass card helper ─────────────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* ── No-scrollbar ──────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
